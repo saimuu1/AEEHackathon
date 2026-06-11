@@ -25,3 +25,7 @@ frontend/dist/
 
 # Logs
 *.log
+
+# Warehouse (regenerable from raw via the pipeline)
+*.duckdb
+*.duckdb.wal

@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# API Keys
-ERCOT_API_KEY = os.getenv("ERCOT_API_KEY", "UlUWQ3Xrloxu4Fzt0VxTSMtvXrIZItqLLfRBCsBG")
+# API Keys — read from environment / .env only; never hardcode secrets in source.
+ERCOT_API_KEY = os.getenv("ERCOT_API_KEY", "")
 EIA_API_KEY = os.getenv("EIA_API_KEY", "")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 

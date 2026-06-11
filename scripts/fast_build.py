@@ -3,7 +3,11 @@
 import gridstatus, pandas as pd, numpy as np, requests, json
 from datetime import datetime, timedelta
 import zipfile, io, csv, os, warnings
+from dotenv import load_dotenv
 warnings.filterwarnings("ignore")
+load_dotenv()  # read EIA_API_KEY etc. from .env
+
+EIA_API_KEY = os.getenv("EIA_API_KEY", "")  # never hardcode secrets
 
 print("=" * 60)
 print("FAST Dataset Build")
@@ -65,7 +69,7 @@ else:
 # ── 3. EIA Gas Prices ──
 print("\n📡 EIA Henry Hub...")
 r = requests.get("https://api.eia.gov/v2/natural-gas/pri/fut/data/", params={
-    "api_key": "UlUWQ3Xrloxu4Fzt0VxTSMtvXrIZItqLLfRBCsBG",
+    "api_key": EIA_API_KEY,
     "frequency": "daily", "data[0]": "value",
     "facets[series][]": "RNGWHHD",
     "sort[0][column]": "period", "sort[0][direction]": "desc",

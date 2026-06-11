@@ -1,0 +1,5 @@
+# Dev / evaluation tooling (Phase 1+). Install into the project venv:
+#   .venv/bin/pip install -r requirements-dev.txt
+pytest>=8.0
+ruff>=0.6
+tabulate>=0.9        # pretty scorecard tables

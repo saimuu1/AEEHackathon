@@ -25,7 +25,7 @@ O_AND_M = 3.50
 OUTPUT_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                            "backend", "data", "historical_spreads.parquet")
 
-EIA_API_KEY = os.getenv("EIA_API_KEY", "UlUWQ3Xrloxu4Fzt0VxTSMtvXrIZItqLLfRBCsBG")
+EIA_API_KEY = os.getenv("EIA_API_KEY", "")  # set in .env; falls back to synthetic gas prices if absent
 
 
 async def fetch_ercot_lmp_async(zones, days_back=90):
