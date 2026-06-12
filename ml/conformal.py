@@ -32,7 +32,7 @@ class ConformalInterval:
         self.nominal = hi_q - lo_q
         self.adjustment_: float | None = None
 
-    def calibrate(self, y_true, q_lo_pred, q_hi_pred) -> "ConformalInterval":
+    def calibrate(self, y_true, q_lo_pred, q_hi_pred) -> ConformalInterval:
         """Learn the band widening from a held-out calibration set."""
         y = np.asarray(y_true, dtype=float)
         lo = np.asarray(q_lo_pred, dtype=float)

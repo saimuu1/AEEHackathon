@@ -12,6 +12,17 @@ filterwarnings = ["ignore::DeprecationWarning"]
 [tool.ruff]
 line-length = 100
 target-version = "py310"
+# The rebuild lives in ml/ pipeline/ mlops/ and the new scripts. The pre-existing
+# hackathon data-collection scripts and root smoke-tests are not part of it.
+extend-exclude = [
+    "scripts/build_historical_dataset.py",
+    "scripts/fast_build.py",
+    "scripts/train_spread_forecaster.py",
+    "scripts/train_regime_classifier.py",
+    "scripts/compute_site_rankings.py",
+    "test_caiso.py",
+    "test_get_current_lmp.py",
+]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]

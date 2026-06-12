@@ -21,7 +21,7 @@ import pandas as pd
 @dataclass
 class Check:
     name: str
-    fn: "callable"            # df -> boolean mask of VALID rows
+    fn: callable            # df -> boolean mask of VALID rows
     description: str = ""
 
 

@@ -4,9 +4,11 @@ Aggregates parquet → site_rankings.json with real metrics.
 
 Usage: /opt/anaconda3/bin/python -m scripts.compute_site_rankings
 """
-import os, sys, json
+import json
+import os
+import sys
+
 import pandas as pd
-import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 

@@ -6,14 +6,13 @@ Usage: /opt/anaconda3/bin/python -m scripts.train_regime_classifier
 """
 import os
 import sys
-import json
-import pandas as pd
+
+import joblib
+import lightgbm as lgb
 import numpy as np
-from sklearn.model_selection import train_test_split
+import pandas as pd
 from sklearn.metrics import classification_report, f1_score
 from sklearn.preprocessing import LabelEncoder
-import lightgbm as lgb
-import joblib
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -55,7 +54,7 @@ def train():
 
     # Generate labels from rules
     df["regime"] = df.apply(classify_regime_rules, axis=1)
-    print(f"\n   Label distribution:")
+    print("\n   Label distribution:")
     print(df["regime"].value_counts().to_string())
 
     # Features

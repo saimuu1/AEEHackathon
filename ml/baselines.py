@@ -14,7 +14,7 @@ where the frames are produced by ``ml.dataset.build_forecast_targets``.
 """
 from __future__ import annotations
 
-from typing import Sequence
+from collections.abc import Sequence
 
 import numpy as np
 import pandas as pd

@@ -1,0 +1,15 @@
+.git
+.venv
+**/__pycache__
+**/*.pyc
+node_modules
+frontend/node_modules
+frontend/dist
+mlruns
+mlflow.db
+mlartifacts
+*.duckdb
+*.duckdb.wal
+.env
+.pytest_cache
+.ruff_cache

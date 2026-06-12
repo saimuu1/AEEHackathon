@@ -44,7 +44,7 @@ def main() -> None:
     X = sample[rich].to_numpy(dtype=float)
     shap_values = shap.TreeExplainer(booster).shap_values(X)
     importance = np.abs(shap_values).mean(axis=0)
-    ranked = sorted(zip(rich, importance), key=lambda t: -t[1])
+    ranked = sorted(zip(rich, importance, strict=False), key=lambda t: -t[1])
 
     _write_report(ranked, len(train), len(sample))
     print("Top 10 features by mean(|SHAP|):")

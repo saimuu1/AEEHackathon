@@ -4,11 +4,13 @@ Single model covers all forecast horizons h ∈ [1, 72].
 
 Usage: /opt/anaconda3/bin/python -m scripts.train_spread_forecaster
 """
-import os, sys
-import pandas as pd
-import numpy as np
-import lightgbm as lgb
+import os
+import sys
+
 import joblib
+import lightgbm as lgb
+import numpy as np
+import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 

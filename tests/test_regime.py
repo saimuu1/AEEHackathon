@@ -14,7 +14,7 @@ def test_label_uses_future_window_exclusive_of_now():
     # Spike (>=50) only at index 3. With horizon=2:
     spreads = [0, 0, 0, 99, 0, 0]
     df = regime.build_spike_labels(_series(spreads), horizon=2, threshold=50)
-    lab = dict(zip(df["ts"].dt.hour, df["spike_next"]))
+    lab = dict(zip(df["ts"].dt.hour, df["spike_next"], strict=False))
     # origin t=1 sees window (t2,t3] -> includes the spike -> 1
     assert lab[1] == 1.0
     # origin t=2 sees (t3,t4] -> spike at t3 -> 1

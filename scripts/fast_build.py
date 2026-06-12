@@ -1,9 +1,18 @@
 #!/usr/bin/env /opt/anaconda3/bin/python
 """Fast dataset build: ERCOT SPP + CAISO + EIA + Weather → parquet"""
-import gridstatus, pandas as pd, numpy as np, requests, json
+import csv
+import io
+import os
+import warnings
+import zipfile
 from datetime import datetime, timedelta
-import zipfile, io, csv, os, warnings
+
+import gridstatus
+import numpy as np
+import pandas as pd
+import requests
 from dotenv import load_dotenv
+
 warnings.filterwarnings("ignore")
 load_dotenv()  # read EIA_API_KEY etc. from .env
 

@@ -13,7 +13,7 @@ on the leakage-free folds.
 """
 from __future__ import annotations
 
-from typing import Callable, Sequence
+from collections.abc import Callable, Sequence
 
 import numpy as np
 import pandas as pd
@@ -61,13 +61,12 @@ class LightGBMQuantileForecaster:
         y = pairs["target_spread"].to_numpy(dtype=float)
         for q in quantiles:
             params = {
-                "objective": "quantile", "alpha": q, "metric": "quantile",
-                "learning_rate": 0.1, "num_leaves": 31, "max_depth": 6,
-                "min_data_in_leaf": 20, "verbose": -1, "seed": self.seed,
-                **self.params,           # tuned overrides win
-                "objective": "quantile",  # never let an override break the contract
-                "alpha": q,
+                "metric": "quantile", "learning_rate": 0.1, "num_leaves": 31,
+                "max_depth": 6, "min_data_in_leaf": 20, "verbose": -1, "seed": self.seed,
             }
+            params.update(self.params)          # tuned overrides win, then...
+            params["objective"] = "quantile"    # ...lock the contract the model relies on
+            params["alpha"] = q
             dtrain = lgb.Dataset(X, label=y, feature_name=self._cols)
             self._models[q] = lgb.train(params, dtrain, num_boost_round=self.num_boost_round)
         return self

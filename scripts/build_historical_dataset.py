@@ -1,14 +1,22 @@
-import os, sys, time, asyncio, httpx
-import pandas as pd
-import numpy as np
-import zipfile, io, csv
+import asyncio
+import csv
+import io
+import os
+import sys
+import time
+import zipfile
 from datetime import datetime, timedelta
+
+import httpx
+import numpy as np
+import pandas as pd
 
 # Add project root to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # ─── Config ──────────────────────────────────────────────────────────
 from backend.data.sites_data import SITES as DATA_SITES
+
 SITES = {}
 for s in DATA_SITES:
     hub = s["gas_hub"].lower().replace(" ", "_").replace("&", "")
@@ -212,7 +220,7 @@ async def build_dataset_async(days_back=90):
     ercot_task = fetch_ercot_lmp_async(ercot_zones, days_back)
     gas_task = fetch_eia_gas_prices_async(days_back + 10)
     
-    print(f"📡 Launching fetches... (ERCOT & Gas in parallel, CAISO sequentially to avoid limits)")
+    print("📡 Launching fetches... (ERCOT & Gas in parallel, CAISO sequentially to avoid limits)")
     base_results = await asyncio.gather(ercot_task, gas_task)
     
     ercot_df = base_results[0]

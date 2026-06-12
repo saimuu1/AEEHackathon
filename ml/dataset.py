@@ -35,7 +35,7 @@ def build_forecast_targets(
     """
     out = []
     delta = pd.Timedelta(hours=horizon)
-    for site, g in df.groupby(site_col):
+    for _site, g in df.groupby(site_col):
         g = g.sort_values(ts_col)
         future = g[[ts_col, target_col]].rename(
             columns={ts_col: "_future_ts", target_col: "target_spread"}

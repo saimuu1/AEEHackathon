@@ -24,12 +24,10 @@ def test_conformal_fixes_undercoverage():
 
 
 def test_apply_before_calibrate_raises():
+    import pytest
     conf = ConformalInterval(0.1, 0.9)
-    try:
+    with pytest.raises(RuntimeError):
         conf.apply([0.0], [1.0])
-        assert False, "expected RuntimeError"
-    except RuntimeError:
-        pass
 
 
 def test_adjustment_widens_symmetrically():

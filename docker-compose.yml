@@ -1,0 +1,21 @@
+# Full stack: API + frontend. `docker compose up --build` from a clean clone.
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      # Persist the warehouse + dataset across container restarts.
+      - ./backend/data:/app/backend/data
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
