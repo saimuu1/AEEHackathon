@@ -1,0 +1,14 @@
+# Best LightGBM params from scripts/tune_forecaster.py (Optuna).
+# Consumed by training in Phase 4 (config-driven, reproducible).
+objective: quantile
+metric: quantile
+num_boost_round: 300
+seed: 42
+learning_rate: 0.019784722270991845
+num_leaves: 177
+max_depth: 11
+min_data_in_leaf: 43
+feature_fraction: 0.6974894281382357
+bagging_fraction: 0.8052449397258459
+lambda_l1: 0.004533156484733439
+lambda_l2: 2.2176453859645493

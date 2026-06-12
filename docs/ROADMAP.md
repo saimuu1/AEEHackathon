@@ -293,7 +293,7 @@ SaaS" checklist on top of the ML/DE core.
     `scripts/build_historical_dataset.py` fetchers; wiring those to append into the raw
     tables on a schedule is a thin follow-up. `raw_weather` is keyed by `site_id`
     (coords-based shared key is a future refinement).
-- **Phase 3 — 🚧 IN PROGRESS (core done).**
+- **Phase 3 — ✅ COMPLETE.**
   - ✅ **Causal feature engineering** (`ml/features.py`): trailing rolling stats (3/6/24h),
     volatility, ramps, calendar + cyclical encodings, weather degree-days (CDD/HDD).
     Strictly causal — asserted by a truncation test (feature at t unchanged when future
@@ -309,6 +309,17 @@ SaaS" checklist on top of the ML/DE core.
     features. (This negative result is itself a strong portfolio signal.)
   - **7 new tests** (feature causality, no site-bridging, degree-days; conformal coverage
     restoration). **38 tests total, green.**
-  - **Remaining in Phase 3:** regime-model redesign (drop self-distillation from rules →
-    predict a future-relevant outcome like a 24h spike); hyperparameter tuning (Optuna)
-    to give the rich features a fair shot; SHAP / feature-importance writeup.
+  - ✅ **Regime-model redesign** (`ml/regime.py`): dropped the circular
+    self-distillation; now forecasts a real future event — *"spread ≥ $50 within next
+    24h?"* (spike risk). Imbalanced-classification metrics (PR-AUC, ROC-AUC, Brier) vs
+    base-rate + hour-climatology baselines. Result: **ROC-AUC 0.737** (genuine ranking
+    skill), beats both baselines; honest about modest precision at 90-day scale.
+    `scripts/evaluate_regime.py` → `reports/phase3_regime.md`.
+  - ✅ **Hyperparameter tuning** (`scripts/tune_forecaster.py`): Optuna TPE on a
+    leakage-free time split, p50-pinball objective. **+6.0% val pinball** (3.545 →
+    3.331) — the rich features pay off once regularized/subsampled. Best params saved
+    to `configs/spread_lgbm.yaml` for Phase 4. → `reports/phase3_tuning.md`.
+  - ✅ **SHAP interpretability** (`scripts/feature_importance.py`): mean(|SHAP|) ranking
+    — current spread dominates, then horizon, time-of-day, gas price, price trends.
+    → `reports/phase3_feature_importance.md`.
+  - **5 new regime tests. 43 tests total, green.** (optuna + shap added to dev deps.)
