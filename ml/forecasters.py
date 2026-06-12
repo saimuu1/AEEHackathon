@@ -34,10 +34,12 @@ class LightGBMQuantileForecaster:
         feature_cols: list[str] | None = None,
         num_boost_round: int = 200,
         seed: int = 42,
+        params: dict | None = None,
     ) -> None:
         self.feature_cols = feature_cols  # None => legacy behavior
         self.num_boost_round = num_boost_round
         self.seed = seed
+        self.params = params or {}  # tuned overrides (e.g. from configs/spread_lgbm.yaml)
         self._models: dict[float, object] = {}
         self._cols: list[str] = []
 
@@ -62,6 +64,9 @@ class LightGBMQuantileForecaster:
                 "objective": "quantile", "alpha": q, "metric": "quantile",
                 "learning_rate": 0.1, "num_leaves": 31, "max_depth": 6,
                 "min_data_in_leaf": 20, "verbose": -1, "seed": self.seed,
+                **self.params,           # tuned overrides win
+                "objective": "quantile",  # never let an override break the contract
+                "alpha": q,
             }
             dtrain = lgb.Dataset(X, label=y, feature_name=self._cols)
             self._models[q] = lgb.train(params, dtrain, num_boost_round=self.num_boost_round)

@@ -1,0 +1,13 @@
+# Training config for the spread forecaster. One seeded, reproducible entrypoint:
+#   .venv/bin/python -m scripts.train --config configs/train_spread.yaml
+experiment: dispatch-iq-spread
+data:
+  parquet: backend/data/historical_spreads.parquet
+features: rich          # rich (engineered) | legacy (original 2-lag set)
+horizons: [1, 6, 24, 72]
+folds: 4
+quantiles: [0.1, 0.5, 0.9]
+mw: 100                 # facility size for the economic backtest
+model_params: configs/spread_lgbm.yaml   # tuned LightGBM params (from Optuna)
+num_boost_round: 300
+seed: 42

@@ -1,0 +1,13 @@
+# Variant config using the legacy 2-lag feature set — intentionally weaker, to
+# demonstrate the promotion gate refusing a regression.
+experiment: dispatch-iq-spread
+data:
+  parquet: backend/data/historical_spreads.parquet
+features: legacy
+horizons: [1, 6, 24, 72]
+folds: 4
+quantiles: [0.1, 0.5, 0.9]
+mw: 100
+model_params: configs/spread_lgbm.yaml
+num_boost_round: 300
+seed: 42

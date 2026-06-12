@@ -21,6 +21,12 @@ data: warehouse  ## Alias: end-to-end data pipeline (currently == warehouse)
 evaluate:  ## Run the leakage-free backtest and write reports/phase1_scorecard.md
 	$(PY) -m scripts.evaluate
 
+train:  ## Config-driven training: track to MLflow + register the production model
+	$(PY) -m scripts.train --config configs/train_spread.yaml --register
+
+registry:  ## List registered model versions and which is production
+	$(PY) -m scripts.promote_model --list
+
 test:  ## Run the test suite
 	$(PY) -m pytest
 

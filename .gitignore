@@ -29,3 +29,10 @@ frontend/dist/
 # Warehouse (regenerable from raw via the pipeline)
 *.duckdb
 *.duckdb.wal
+
+# MLflow local tracking store (large; runs are regenerable)
+mlruns/
+mlflow.db
+mlartifacts/
+# Model binaries in the registry (keep registry.json + model cards, not the .txt boosters)
+models/registry/**/*.txt

@@ -323,3 +323,19 @@ SaaS" checklist on top of the ML/DE core.
     — current spread dominates, then horizon, time-of-day, gas price, price trends.
     → `reports/phase3_feature_importance.md`.
   - **5 new regime tests. 43 tests total, green.** (optuna + shap added to dev deps.)
+- **Phase 4 — ✅ COMPLETE.**
+  - ✅ **Config-driven training** (`scripts/train.py` + `configs/train_spread.yaml`):
+    one seeded entrypoint — `make train`. Loads tuned params from
+    `configs/spread_lgbm.yaml`, backtests vs persistence, trains the final model.
+  - ✅ **MLflow tracking** (SQLite backend): params, metrics (pinball/coverage/capture/
+    savings + baseline), data-hash tag, and artifacts logged per run.
+  - ✅ **Dataset versioning** (`mlops/versioning.py`): SHA-256 content hash ties each
+    model to the exact data snapshot (lightweight DVC equivalent).
+  - ✅ **Model registry** (`mlops/registry.py`): versioned models, one `production`,
+    JSON-backed; **promotion gate** refuses a model that doesn't beat the incumbent.
+    Demonstrated live — v2 (legacy, pinball 2.567) rejected vs v1 (2.555).
+  - ✅ **Auto model card** (`mlops/model_card.py`): data window, metrics vs baseline,
+    intended use, limitations — regenerated each train.
+  - **7 new MLOps tests. 50 tests total, green.** → `reports/phase4_mlops.md`.
+  - Production model **v1** registered (rich features, tuned): pinball **2.555**,
+    capture **57.4%**.
