@@ -7,6 +7,9 @@ requires-python = ">=3.10"
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+# Put the repo root on sys.path so `import ml/pipeline/mlops` works under the bare
+# `pytest` console script (CI), not just `python -m pytest` (which adds CWD itself).
+pythonpath = ["."]
 filterwarnings = ["ignore::DeprecationWarning"]
 
 [tool.ruff]
